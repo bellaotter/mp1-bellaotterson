@@ -8,13 +8,11 @@ import { shuffle } from "../utils/ArrayUtils";
 const names = Object.keys(nameToPic);
 
 export default function GameScreen() {
-  // TODO: Declare and initialize state variables here, using "useState".
-  // correct and total state variables
   const [currentScore, setCurrentScore] = useState(0);
   const [totalScore, setTotalScore] = useState(0);
   const [options, setOptions] = useState([]);
   const [correct, setCorrect] = useState([names[0][0]]);
-  const [correctImageState, setCorrectImageState] = useState([names[0][1]]);
+  const [correctImageState, setCorrectImageState] = useState(" ");
   // State for the timer is handled for you.
   const [timeLeft, setTimeLeft] = useState(5000);
 
@@ -25,7 +23,6 @@ export default function GameScreen() {
       setTimeLeft(timeLeft - 10);
     } else {
       // Time has expired
-      // TODO: update appropriate state variables
       // count question as incorrect
       setTotalScore(totalScore + 1);
     }
@@ -52,14 +49,10 @@ export default function GameScreen() {
     setOptions(nameOptions);
     setCorrect(correctName);
     setCorrectImageState(correctImage);
-
-    // TODO: Update state here.
-
     setTimeLeft(5000);
   };
 
   // Called when user taps a name option.
-  // TODO: Update correct # and total # state values.
   const selectedNameChoice = (index) => {
     if (options[index] == correct){
       setCurrentScore(currentScore + 1);
@@ -75,8 +68,6 @@ export default function GameScreen() {
     };
   });
 
-  // TODO: Finish this useEffect() hook such that we automatically
-  // get the next round when the appropriate state variable changes.
   useEffect(
     () => {
       getNextRound();
@@ -105,21 +96,15 @@ export default function GameScreen() {
   // Style & return the view.
   return (
     <View style={styles.container}>
-      {/* TODO: Build out your UI using Text and Image components. */ }
         <Text style={styles.scoreText}>Current Score: {currentScore}/{totalScore} </Text>
-        <Text style={styles.timerText}>Time Remaining: {(timeLeft/1000)}</Text>
+        <Text style={styles.timerText}>Time Remaining:  
+          <Text> {(timeLeft/1000).toFixed(2)}</Text>
+        </Text>
         <Image style={styles.image} source = {correctImageState}/>
       {nameButtons[0]}
       {nameButtons[1]}
       {nameButtons[2]}
       {nameButtons[3]}
-        
-      
-      {
-      /* Hint: What does the nameButtons list above hold? 
-          What types of objects is this list storing?
-          Try to get a sense of what's going on in the for loop above. */
-      }
     </View>
   );
 }
